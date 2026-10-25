@@ -1,20 +1,25 @@
 
 "use strict";
 
-const products = require("../data/products");
+const Product = require("../models/product.model");
 
-function searchProducts(req, res) {
+async function searchProducts(req, res) {
   const query = String(req.query.q || "").trim();
 
-  const filteredProducts = query
-    ? products.filter((product) =>
-        `${product.name} ${product.category}`
-          .toLowerCase()
-          .includes(query.toLowerCase())
-      )
-    : [];
+  let filteredProducts = [];
 
-  res.render("search/index", {
+  if (query) {
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    filteredProducts = await Product.find({
+      $or: [
+        { name: { $regex: escapedQuery, $options: "i" } },
+        { category: { $regex: escapedQuery, $options: "i" } },
+      ],
+    }).sort({ createdAt: 1 });
+  }
+
+  return res.render("search/index", {
     title: query
       ? `Search results for "${query}" | OrderNow`
       : "Search Products | OrderNow",

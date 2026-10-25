@@ -8,23 +8,104 @@
     </p>
   </header>
 
-  <!-- Empty Wishlist State -->
-  <div class="wishlist-empty" id="wishlist-empty">
-    <div class="wishlist-empty-icon" aria-hidden="true">♡</div>
+  <% if (!wishlist || wishlist.length === 0) { %>
+    <div class="wishlist-empty" id="wishlist-empty">
+      <div class="wishlist-empty-icon" aria-hidden="true">♡</div>
 
-    <h2>Your wishlist is waiting</h2>
+      <h2>Your wishlist is waiting</h2>
 
-    <p>You haven't added any favourite products yet.</p>
+      <p>You haven't added any favourite products yet.</p>
 
-    <a class="wishlist-shop-button" href="/">
-      Explore Products
-    </a>
-  </div>
+      <a class="wishlist-shop-button" href="/products">
+        Explore Products
+      </a>
+    </div>
+  <% } else { %>
+    <div class="wishlist-grid" id="wishlist-grid">
+      <% wishlist.forEach((product) => { %>
+        <article class="wishlist-card">
+          <a
+            class="wishlist-product-link"
+            href="/products/<%= encodeURIComponent(product.id) %>"
+          >
+            <div class="wishlist-product-image" aria-hidden="true">
+              <%= product.image %>
+            </div>
 
-  <!-- Saved Wishlist Products -->
-  <div
-    class="wishlist-grid"
-    id="wishlist-grid"
-    hidden
-  ></div>
+            <p class="wishlist-product-category">
+              <%= product.category %>
+            </p>
+
+            <h2><%= product.name %></h2>
+
+            <p class="wishlist-product-price">
+              ₹<%= product.price.toLocaleString("en-IN") %>
+            </p>
+          </a>
+
+          <button
+            type="button"
+            class="wishlist-remove-button"
+            data-product-id="<%= product.id %>"
+          >
+            Remove
+          </button>
+
+          <p
+            class="wishlist-item-feedback"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
 </section>
+
+<script>
+  (() => {
+    const wishlistGrid = document.getElementById("wishlist-grid");
+
+    if (!wishlistGrid) return;
+
+    wishlistGrid.addEventListener("click", async (event) => {
+      const button = event.target.closest(".wishlist-remove-button");
+
+      if (!button) return;
+
+      const productId = button.dataset.productId;
+      const card = button.closest(".wishlist-card");
+      const feedback = card.querySelector(".wishlist-item-feedback");
+
+      button.disabled = true;
+      feedback.textContent = "Removing product...";
+
+      try {
+        const response = await fetch("/wishlist/remove", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || "Unable to remove product.");
+        }
+
+        card.remove();
+
+        if (!wishlistGrid.querySelector(".wishlist-card")) {
+          window.location.reload();
+        }
+      } catch (error) {
+        feedback.textContent =
+          error.message || "Something went wrong. Please try again.";
+
+        button.disabled = false;
+      }
+    });
+  })();
+</script>

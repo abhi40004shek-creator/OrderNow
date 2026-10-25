@@ -16,6 +16,8 @@ const orderRoutes = require("./routes/order.routes");
 const adminRoutes = require("./routes/admin.routes");
 const productApiRoutes = require("./routes/api/product.routes");
 
+const session = require("express-session");
+const { MongoStore } = require("connect-mongo");
 // Error-handling middleware
 const {
   notFoundHandler,
@@ -40,6 +42,34 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+
+// ================================
+// Session Configuration
+// ================================
+
+if (!process.env.SESSION_SECRET) {
+  throw new Error("SESSION_SECRET is missing from environment variables.");
+}
+
+app.use(
+  session({
+    name: "ordernow.sid",
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      collectionName: "sessions",
+      ttl: 24 * 60 * 60,
+    }),
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
 
 // ================================
 // EJS Layout Configuration

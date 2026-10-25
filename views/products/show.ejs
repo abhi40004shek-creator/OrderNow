@@ -197,3 +197,46 @@
     id="recently-viewed-grid"
   ></div>
 </section>
+
+<script>
+  (() => {
+    const wishlistButton = document.getElementById("add-to-wishlist");
+    const wishlistFeedback = document.getElementById("wishlist-feedback");
+    const productDetails = document.querySelector(".product-details-info");
+
+    if (!wishlistButton || !wishlistFeedback || !productDetails) {
+      return;
+    }
+
+    wishlistButton.addEventListener("click", async () => {
+      const productId = productDetails.dataset.productId;
+
+      wishlistButton.disabled = true;
+      wishlistFeedback.textContent = "Adding to wishlist...";
+
+      try {
+        const response = await fetch("/wishlist/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || "Could not add product.");
+        }
+
+        wishlistFeedback.textContent = result.message;
+        wishlistButton.textContent = "♥ Added to Wishlist";
+      } catch (error) {
+        wishlistFeedback.textContent =
+          error.message || "Something went wrong. Please try again.";
+      } finally {
+        wishlistButton.disabled = false;
+      }
+    });
+  })();
+</script>
