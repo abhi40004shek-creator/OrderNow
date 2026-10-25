@@ -14,6 +14,7 @@ const cartRoutes = require("./routes/cart.routes");
 const checkoutRoutes = require("./routes/checkout.routes");
 const orderRoutes = require("./routes/order.routes");
 const adminRoutes = require("./routes/admin.routes");
+const productApiRoutes = require("./routes/api/product.routes");
 
 // Error-handling middleware
 const {
@@ -56,6 +57,8 @@ app.use("/", homeRoutes);
 app.use("/search", searchRoutes);
 
 app.use("/products", productRoutes);
+
+app.use("/api/products", productApiRoutes);
 
 app.use("/wishlist", wishlistRoutes);
 
