@@ -1,0 +1,79 @@
+```ejs
+<link rel="stylesheet" href="/css/order-history.css" />
+
+<main class="order-history-page">
+  <section class="order-history-container">
+    <header class="order-history-header">
+      <h1>Order Details</h1>
+      <p>Review your order information and purchased products.</p>
+    </header>
+
+    <article class="order-history-card">
+      <header class="order-history-card-header">
+        <h2>Order #<%= order.id %></h2>
+        <span class="order-history-status"><%= order.status %></span>
+      </header>
+
+      <div class="order-history-meta">
+        <p>
+          <strong>Order Date</strong>
+          <%= new Date(order.createdAt).toLocaleString("en-IN") %>
+        </p>
+
+        <p>
+          <strong>Customer</strong>
+          <%= order.customer.fullName %>
+        </p>
+
+        <p>
+          <strong>Email</strong>
+          <%= order.customer.email %>
+        </p>
+
+        <p>
+          <strong>Phone</strong>
+          <%= order.customer.phone %>
+        </p>
+
+        <p>
+          <strong>Delivery Address</strong>
+          <%= order.customer.address %>, <%= order.customer.city %> - <%= order.customer.postalCode %>
+        </p>
+      </div>
+
+      <div class="order-history-items">
+        <h3>Products</h3>
+
+        <% order.items.forEach((item) => { %>
+          <div class="order-history-item">
+            <span><%= item.image %> <%= item.name %> × <%= item.quantity %></span>
+            <span>₹<%= (item.price * item.quantity).toLocaleString("en-IN") %></span>
+          </div>
+        <% }); %>
+      </div>
+
+      <div class="order-history-meta">
+        <p>
+          <strong>Subtotal</strong>
+          ₹<%= Number(order.subtotal).toLocaleString("en-IN") %>
+        </p>
+
+        <p>
+          <strong>Shipping</strong>
+          <%= Number(order.shipping) === 0 ? "Free" : `₹${Number(order.shipping).toLocaleString("en-IN")}` %>
+        </p>
+
+        <p>
+          <strong>Total</strong>
+          ₹<%= Number(order.total).toLocaleString("en-IN") %>
+        </p>
+      </div>
+    </article>
+
+    <div class="order-history-actions">
+      <a href="/api/orders/history" class="btn btn-primary">Back to My Orders</a>
+      <a href="/" class="btn btn-primary">Continue Shopping</a>
+    </div>
+  </section>
+</main>
+```</Writing

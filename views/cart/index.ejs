@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="/css/cart.css" />
+<section class="cart-page container"> 
+  <header class="cart-header">
+    <p class="cart-eyebrow">YOUR SHOPPING</p>
+    <h1>Shopping Cart</h1>
+    <p class="cart-description">
+      Review your items and get everything ready for checkout.
+    </p>
+  </header>
+
+  <div class="cart-layout">
+    <section class="cart-items-section" aria-label="Cart items">
+      <div class="cart-items-header">
+        <h2>Your Items</h2>
+        <span id="cart-item-count">0 items</span>
+      </div>
+
+      <div id="cart-items" class="cart-items" aria-live="polite"></div>
+
+      <div id="cart-empty" class="cart-empty" hidden>
+        <div class="cart-empty-icon" aria-hidden="true">🛒</div>
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added any products yet.</p>
+        <a href="/" class="cart-shop-button">Continue Shopping</a>
+      </div>
+    </section>
+
+    <aside class="cart-summary" aria-label="Order summary">
+      <h2>Order Summary</h2>
+
+      <div class="cart-summary-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">₹0</span>
+      </div>
+
+      <div class="cart-summary-row">
+        <span>Shipping</span>
+        <span id="cart-shipping">Calculated at checkout</span>
+      </div>
+
+      <div class="cart-summary-row cart-total-row">
+        <span>Total</span>
+        <span id="cart-total">₹0</span>
+      </div>
+
+      <button
+        type="button"
+        id="cart-checkout-button"
+        class="cart-checkout-button"
+        disabled
+      >
+        Proceed to Checkout
+      </button>
+
+      <a href="/" class="cart-continue-link">Continue Shopping</a>
+
+      <p class="cart-security-note">
+        Your order total will be confirmed before payment.
+      </p>
+    </aside>
+  </div>
+</section>
+<script src="/js/main.js" defer></script> 

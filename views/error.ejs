@@ -1,0 +1,17 @@
+<section class="error-page container">
+  <div class="error-page-content">
+    <p class="error-page-code"><%= statusCode %></p>
+
+    <h1>
+      <%= statusCode === 404
+        ? "Page Not Found"
+        : "Something Went Wrong" %>
+    </h1>
+
+    <p class="error-page-message"><%= message %></p>
+
+    <a class="error-page-button" href="/">
+      Back to Home
+    </a>
+  </div>
+</section>

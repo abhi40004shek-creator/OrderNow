@@ -1,0 +1,62 @@
+
+<link rel="stylesheet" href="/css/order-history.css" />
+
+<main class="order-history-page">
+  <section class="order-history-container">
+    <header class="order-history-header">
+      <h1>Track Your Order</h1>
+      <p>Enter your order ID to view its current status.</p>
+    </header>
+
+    <form
+      action="/api/orders/tracking"
+      method="GET"
+      class="order-tracking-form"
+    >
+      <label for="orderId">Order ID</label>
+
+      <input
+        type="text"
+        id="orderId"
+        name="orderId"
+        placeholder="Enter your order ID"
+        value="<%= typeof orderId !== 'undefined' ? orderId : '' %>"
+        required
+      />
+
+      <button type="submit" class="btn btn-primary">
+        Track Order
+      </button>
+    </form>
+
+<% if (typeof errorMessage !== "undefined" && errorMessage) { %>
+  <p class="order-history-empty" role="alert">
+    <%= errorMessage %>
+  </p>
+<% } %>
+
+    <% if (typeof order !== 'undefined' && order) { %>
+      <article class="order-history-card">
+        <header class="order-history-card-header">
+          <h2>Order #<%= order.id %></h2>
+
+          <span class="order-history-status">
+            <%= order.status %>
+          </span>
+        </header>
+
+        <div class="order-history-meta">
+          <p>
+            <strong>Order Date</strong>
+            <%= new Date(order.createdAt).toLocaleString("en-IN") %>
+          </p>
+
+          <p>
+            <strong>Order Total</strong>
+            ₹<%= Number(order.total).toLocaleString("en-IN") %>
+          </p>
+        </div>
+      </article>
+    <% } %>
+  </section>
+</main>

@@ -1,0 +1,256 @@
+
+.order-history-page {
+  min-height: 70vh;
+  padding: 48px 20px;
+  background: #f8fafc;
+}
+
+.order-history-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.order-history-header {
+  margin-bottom: 28px;
+}
+
+.order-history-header h1 {
+  margin-bottom: 8px;
+  color: #0f172a;
+  font-size: clamp(28px, 4vw, 36px);
+}
+
+.order-history-header p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+#order-history-feedback {
+  margin-bottom: 16px;
+  color: #b91c1c;
+}
+
+#order-history-list {
+  display: grid;
+  gap: 18px;
+}
+
+.order-history-loading,
+.order-history-empty {
+  padding: 32px 20px;
+  color: #64748b;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.order-history-card {
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgb(15 23 42 / 4%);
+}
+
+.order-history-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.order-history-card h2 {
+  color: #0f172a;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.order-history-status {
+  padding: 6px 12px;
+  color: #92400e;
+  background: #fef3c7;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.order-history-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 18px 0;
+}
+
+.order-history-meta p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.order-history-meta strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #334155;
+}
+
+.order-history-items {
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.order-history-items h3 {
+  margin-bottom: 12px;
+  color: #0f172a;
+  font-size: 16px;
+}
+
+.order-history-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.order-history-item span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.order-history-item span:last-child {
+  flex-shrink: 0;
+  font-weight: 600;
+  text-align: right;
+}
+
+.order-history-actions {
+  margin-top: 24px;
+}
+
+.order-history-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 20px;
+  color: #ffffff;
+  background: #2563eb;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.order-history-actions .btn:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 600px) {
+  .order-history-page {
+    padding: 32px 16px;
+  }
+
+  .order-history-card {
+    padding: 18px;
+  }
+
+  .order-history-meta {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .order-history-item {
+    gap: 10px;
+  }
+}
+
+.order-history-card > .order-history-actions {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.order-history-card > .order-history-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 18px;
+  color: #ffffff;
+  background: #2563eb;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.order-history-card > .order-history-actions .btn:hover {
+  background: #1d4ed8;
+}
+
+.order-tracking-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 28px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.order-tracking-form label {
+  grid-column: 1 / -1;
+  color: #334155;
+  font-weight: 600;
+}
+
+.order-tracking-form input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.order-tracking-form input:focus {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+  border-color: #2563eb;
+}
+
+.order-tracking-form .btn {
+  min-height: 44px;
+  padding: 10px 18px;
+  color: #ffffff;
+  background: #2563eb;
+  border: none;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.order-tracking-form .btn:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 520px) {
+  .order-tracking-form {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .order-tracking-form label {
+    grid-column: auto;
+  }
+}

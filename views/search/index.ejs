@@ -1,0 +1,85 @@
+
+<section class="search-results-section container">
+  <div class="search-results-heading">
+    <p class="search-results-eyebrow">ORDERNOW SEARCH</p>
+
+    <h1>
+      <% if (query) { %>
+        Search results for "<%= query %>"
+      <% } else { %>
+        Search products
+      <% } %>
+    </h1>
+
+    <p class="search-results-description">
+      <% if (query) { %>
+        <%= products.length %> product(s) found.
+      <% } else { %>
+        Enter a product name in the search bar to get started.
+      <% } %>
+    </p>
+  </div>
+
+  <% if (products.length > 0) { %>
+    <div class="search-products-grid">
+      <% products.forEach((product) => { %>
+        <article class="search-product-card">
+         <a
+           class="search-product-image"
+           href="/products/<%= encodeURIComponent(product.id) %>"
+          aria-label="View <%= product.name %> details"
+         >
+       <span aria-hidden="true"><%= product.image %></span>
+       </a>
+
+          <div class="search-product-info">
+            <p class="search-product-category">
+              <%= product.category %>
+            </p>
+
+            <h2>
+  <a
+    class="search-product-title-link"
+    href="/products/<%= encodeURIComponent(product.id) %>"
+  >
+    <%= product.name %>
+  </a>
+</h2>
+
+            <p class="search-product-rating">
+              ⭐ <%= product.rating %>
+            </p>
+
+            <div class="search-product-bottom">
+              <div class="search-product-price">
+                <strong>
+                  ₹<%= product.price.toLocaleString("en-IN") %>
+                </strong>
+                <del>
+                  ₹<%= product.originalPrice.toLocaleString("en-IN") %>
+                </del>
+              </div>
+
+              <button
+                class="search-product-add"
+                type="button"
+                aria-label="Add <%= product.name %> to cart"
+                disabled
+                title="Cart functionality will be added later"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  <% } else if (query) { %>
+    <div class="search-empty-state">
+      <div class="search-empty-icon" aria-hidden="true">⌕</div>
+      <h2>No products found</h2>
+      <p>Try another product name or category.</p>
+      <a class="search-back-link" href="/">Continue shopping</a>
+    </div>
+  <% } %>
+</section>

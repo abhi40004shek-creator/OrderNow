@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="/css/checkout.css" />
+<main class="checkout-page">
+  <div class="checkout-container">
+    <header class="checkout-header">
+      <h1>Checkout</h1>
+      <p>Review your order before continuing.</p>
+    </header>
+
+    <div class="checkout-layout">
+      <section class="checkout-form-section">
+        <h2>Delivery Information</h2>
+
+        <form id="checkout-form">
+          <div class="checkout-field">
+            <label for="full-name">Full Name</label>
+            <input
+              type="text"
+              id="full-name"
+              name="fullName"
+              autocomplete="name"
+              required
+            />
+          </div>
+
+          <div class="checkout-field">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="checkout-field">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              autocomplete="tel"
+              required
+            />
+          </div>
+
+          <div class="checkout-field">
+            <label for="address">Street Address</label>
+            <textarea
+              id="address"
+              name="address"
+              autocomplete="street-address"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+
+          <div class="checkout-field">
+            <label for="city">City</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              autocomplete="address-level2"
+              required
+            />
+          </div>
+
+          <div class="checkout-field">
+            <label for="postal-code">PIN Code</label>
+            <input
+              type="text"
+              id="postal-code"
+              name="postalCode"
+              inputmode="numeric"
+              autocomplete="postal-code"
+              pattern="[0-9]{6}"
+              maxlength="6"
+              required
+            />
+          </div>
+
+          <button type="submit" id="place-order-button">
+            Continue to Place Order
+          </button>
+
+          <p
+            id="checkout-feedback"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
+      </section>
+
+      <aside class="checkout-summary">
+        <h2>Order Summary</h2>
+
+        <div id="checkout-items">
+          <p>Your order items will appear here.</p>
+        </div>
+
+        <div class="checkout-summary-row">
+          <span>Subtotal</span>
+          <span id="checkout-subtotal">₹0</span>
+        </div>
+
+        <div class="checkout-summary-row">
+          <span>Shipping</span>
+          <span id="checkout-shipping">Calculated later</span>
+        </div>
+
+        <div class="checkout-summary-row checkout-grand-total">
+          <strong>Total</strong>
+          <strong id="checkout-total">₹0</strong>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+  <script src="/js/checkout.js" defer></script>

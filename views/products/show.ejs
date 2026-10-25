@@ -1,0 +1,199 @@
+
+<nav class="product-breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  <span aria-hidden="true">/</span>
+  <a href="/search?q=<%= encodeURIComponent(product.name) %>">
+    Search Results
+  </a>
+  <span aria-hidden="true">/</span>
+  <span aria-current="page"><%= product.name %></span>
+</nav>
+
+<section class="product-details-section container">
+  <a
+    class="product-back-link"
+    href="/search?q=<%= encodeURIComponent(product.name) %>"
+  >
+    ← Back to search results
+  </a>
+
+  <div class="product-details-layout">
+    <div class="product-details-visual">
+      <span aria-hidden="true"><%= product.image %></span>
+    </div>
+
+    <div
+      class="product-details-info"
+      data-product-id="<%= product.id %>"
+      data-product-name="<%= product.name %>"
+      data-product-image="<%= product.image %>"
+      data-product-category="<%= product.category %>"
+      data-product-price="<%= product.price %>"
+      data-product-stock="<%= product.stock %>"
+    >
+      <p class="product-details-category">
+        <%= product.category %>
+      </p>
+
+      <h1><%= product.name %></h1>
+
+      <p class="product-details-rating">
+        ⭐ <%= product.rating %> / 5
+      </p>
+
+      <div class="product-stock-status">
+        <% if (product.stock > 0) { %>
+          <span class="stock-indicator in-stock"></span>
+          <p>In Stock — <%= product.stock %> available</p>
+        <% } else { %>
+          <span class="stock-indicator out-of-stock"></span>
+          <p>Out of Stock</p>
+        <% } %>
+      </div>
+
+      <div class="product-details-discount">
+        <span><%= discountPercentage %>% OFF</span>
+        <p>You save ₹<%= savings.toLocaleString("en-IN") %> each</p>
+      </div>
+
+      <div class="product-details-price">
+        <strong>
+          ₹<%= product.price.toLocaleString("en-IN") %>
+        </strong>
+        <del>
+          ₹<%= product.originalPrice.toLocaleString("en-IN") %>
+        </del>
+      </div>
+
+      <div class="product-total-price">
+        <span>Total Price</span>
+        <strong
+          id="product-total-price"
+          data-unit-price="<%= product.price %>"
+        >
+          ₹<%= product.price.toLocaleString("en-IN") %>
+        </strong>
+      </div>
+
+      <div class="product-total-savings">
+        <span>Total Savings</span>
+        <strong
+          id="product-total-savings"
+          data-unit-savings="<%= savings %>"
+        >
+          ₹<%= savings.toLocaleString("en-IN") %>
+        </strong>
+      </div>
+
+      <% if (product.stock > 0) { %>
+        <div class="product-quantity-selector">
+          <label for="product-quantity">Quantity</label>
+
+          <input
+            id="product-quantity"
+            type="number"
+            name="quantity"
+            min="1"
+            max="<%= product.stock %>"
+            value="1"
+            step="1"
+            required
+            oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value !== '' && Number(this.value) > <%= product.stock %>) this.value = '<%= product.stock %>'; if (this.value !== '' && Number(this.value) < 1) this.value = '1';"
+          />
+
+          <p>Maximum <%= product.stock %> item(s) available</p>
+        </div>
+      <% } %>
+
+      <p class="product-details-description">
+        <%= product.description %>
+      </p>
+
+<button
+  class="product-details-add-button"
+  id="add-to-cart-button"
+  type="button"
+  <%= product.stock <= 0 ? "disabled" : "" %>
+  title="<%= product.stock <= 0
+    ? 'This product is out of stock'
+    : 'Add this product to your shopping cart' %>"
+>
+  <%= product.stock <= 0 ? "Out of Stock" : "Add to Cart" %>
+</button>
+
+<p
+  id="cart-feedback"
+  class="cart-feedback"
+  role="status"
+  aria-live="polite"
+></p>
+
+
+      <p class="product-details-note">
+        Cart and checkout functionality will be added in a later step.
+      </p>
+
+      <!-- Wishlist Button -->
+      <button
+        class="product-details-wishlist-button"
+        type="button"
+        id="add-to-wishlist"
+      >
+        ♡ Add to Wishlist
+      </button>
+
+      <p
+        id="wishlist-feedback"
+        class="product-details-note"
+        role="status"
+        aria-live="polite"
+      ></p>
+    </div>
+  </div>
+
+  <div class="product-specifications">
+    <h2>Product Specifications</h2>
+
+    <dl class="product-specifications-list">
+      <div>
+        <dt>Product ID</dt>
+        <dd><%= product.id %></dd>
+      </div>
+
+      <div>
+        <dt>Category</dt>
+        <dd><%= product.category %></dd>
+      </div>
+
+      <div>
+        <dt>Rating</dt>
+        <dd>⭐ <%= product.rating %> / 5</dd>
+      </div>
+
+      <div>
+        <dt>Availability</dt>
+        <dd>
+          <%= product.stock > 0
+            ? `${product.stock} items in stock`
+            : "Out of stock" %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<section
+  class="recently-viewed-section container"
+  id="recently-viewed-section"
+  hidden
+>
+  <div class="recently-viewed-header">
+    <h2>Recently Viewed Products</h2>
+    <p>Pick up where you left off.</p>
+  </div>
+
+  <div
+    class="recently-viewed-grid"
+    id="recently-viewed-grid"
+  ></div>
+</section>

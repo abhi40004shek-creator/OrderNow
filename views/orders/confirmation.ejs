@@ -1,0 +1,70 @@
+<link rel="stylesheet" href="/css/order-confirmation.css" />
+<main class="order-confirmation">
+  <section class="confirmation-card">
+    <div class="confirmation-icon" aria-hidden="true">✓</div>
+
+    <h1>Order Placed Successfully!</h1>
+
+    <p>
+      Thank you for shopping with OrderNow.
+      Your order has been received.
+    </p>
+
+    <div class="order-details">
+      <p>
+        <strong>Order ID:</strong>
+        <span id="confirmation-order-id"><%= order.id %></span>
+      </p>
+
+      <p>
+        <strong>Order Status:</strong>
+        <span id="confirmation-order-status"><%= order.status %></span>
+      </p>
+
+      <p>
+        <strong>Order Total:</strong>
+        <span>₹<%= Number(order.total).toLocaleString("en-IN") %></span>
+      </p>
+
+       <p>
+          <strong>Subtotal:</strong>
+          <span>₹<%= Number(order.subtotal).toLocaleString("en-IN") %></span>
+        </p>
+
+      <p>
+           <strong>Shipping:</strong>
+             <span>
+             <%= Number(order.shipping) === 0
+                 ? "Free"
+           : `₹${Number(order.shipping).toLocaleString("en-IN")}` %>
+            </span>
+       </p>
+
+    </div>
+    
+
+<section class="confirmation-order-items">
+  <h2>Order Items</h2>
+
+  <% order.items.forEach((item) => { %>
+    <div class="checkout-item">
+      <span>
+        <%= item.image %>
+        <%= item.name %>
+        × <%= item.quantity %>
+      </span>
+
+      <span>
+        ₹<%= (item.price * item.quantity).toLocaleString("en-IN") %>
+      </span>
+    </div>
+  <% }); %>
+</section>
+
+
+    <div class="confirmation-actions">
+      <a href="/" class="btn btn-primary">Continue Shopping</a>
+      <a href="/products" class="btn btn-secondary">Browse Products</a>
+    </div>
+  </section>
+</main>

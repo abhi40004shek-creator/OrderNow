@@ -1,0 +1,37 @@
+
+<header class="site-header">
+  <div class="navbar container">
+    <a class="brand" href="/" aria-label="OrderNow homepage">
+      <span class="brand-mark">O</span>
+      <span class="brand-name">Order<span>Now</span></span>
+    </a>
+
+    <form class="search-form" action="/search" method="GET" role="search">
+      <label class="visually-hidden" for="site-search">
+        Search products
+      </label>
+
+      <input
+        id="site-search"
+        type="search"
+        name="q"
+        placeholder="Search for products, brands and more..."
+      />
+
+      <button type="submit" aria-label="Search products">
+        Search
+      </button>
+    </form>
+
+    <nav class="nav-actions" aria-label="Main navigation">
+      <a href="/account/login">Sign in</a>
+      <a href="/wishlist">Wishlist</a>
+
+      <a href="/api/orders/history">My Orders</a>
+      <a href="/api/orders/tracking">Track Order</a>
+      <a href="/cart" class="cart-link">
+        Cart <span class="cart-count">0</span>
+      </a>
+    </nav>
+  </div>
+</header>

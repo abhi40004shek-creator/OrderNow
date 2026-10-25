@@ -1,0 +1,69 @@
+/* Error Page */
+
+.error-page {
+  display: grid;
+  min-height: 60vh;
+  padding-top: 48px;
+  padding-bottom: 48px;
+  place-items: center;
+}
+
+.error-page-content {
+  width: 100%;
+  max-width: 560px;
+  padding: 40px 24px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--surface-color);
+  text-align: center;
+}
+
+.error-page-code {
+  margin-bottom: 12px;
+  color: var(--primary-color);
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.error-page-content h1 {
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+}
+
+.error-page-message {
+  margin-bottom: 28px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.error-page-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 22px;
+  border-radius: var(--radius-md);
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.error-page-button:hover {
+  opacity: 0.88;
+}
+
+.error-page-button:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .error-page-content {
+    padding: 32px 18px;
+  }
+}

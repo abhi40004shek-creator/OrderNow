@@ -1,0 +1,97 @@
+
+<main class="admin-orders-page">
+  <section class="admin-orders-container">
+    <header class="admin-orders-header">
+      <div>
+        <span class="admin-eyebrow">ORDERNOW ADMIN</span>
+        <h1>Order Management</h1>
+        <p>Track customer purchases and manage order fulfillment.</p>
+      </div>
+
+      <div class="admin-orders-count">
+        <span>Total Orders</span>
+        <strong><%= orders.length %></strong>
+      </div>
+    </header>
+
+    <% if (orders.length === 0) { %>
+      <section class="admin-orders-empty">
+        <h2>No orders yet</h2>
+        <p>Customer orders will appear here when they place an order.</p>
+      </section>
+    <% } else { %>
+      <section class="admin-orders-list">
+        <% orders.forEach((order) => { %>
+          <article class="admin-order-card">
+            <div class="admin-order-top">
+              <div class="admin-order-identity">
+                <span class="admin-order-label">ORDER ID</span>
+                <h2><%= order.id %></h2>
+                <p>
+                  Placed
+                  <%= new Date(order.createdAt).toLocaleString("en-IN") %>
+                </p>
+              </div>
+
+              <span class="admin-order-status status-<%= order.status.toLowerCase() %>">
+                <%= order.status %>
+              </span>
+            </div>
+
+            <div class="admin-order-details">
+              <div class="admin-detail-item">
+                <span>Customer</span>
+                <strong><%= order.customer.fullName %></strong>
+              </div>
+
+              <div class="admin-detail-item">
+                <span>Email Address</span>
+                <strong><%= order.customer.email %></strong>
+              </div>
+
+              <div class="admin-detail-item">
+                <span>Order Total</span>
+                <strong class="admin-order-total">
+                  ₹<%= Number(order.total).toLocaleString("en-IN") %>
+                </strong>
+              </div>
+            </div>
+
+            <div class="admin-order-actions">
+              <form
+                action="/admin/orders/<%= encodeURIComponent(order.id) %>/status"
+                method="POST"
+                class="admin-order-status-form"
+              >
+                <div class="admin-status-field">
+                  <label for="status-<%= order.id %>">
+                    Update order status
+                  </label>
+
+                  <select
+                    id="status-<%= order.id %>"
+                    name="status"
+                    required
+                  >
+                    <% ["Pending", "Confirmed", "Shipped", "Delivered", "Cancelled"].forEach((status) => { %>
+                      <option
+                        value="<%= status %>"
+                        <%= order.status === status ? "selected" : "" %>
+                      >
+                        <%= status %>
+                      </option>
+                    <% }); %>
+                  </select>
+                </div>
+
+                <button type="submit" class="admin-update-button">
+                  Update Status
+                </button>
+              </form>
+            </div>
+          </article>
+        <% }); %>
+      </section>
+    <% } %>
+  </section>
+</main>

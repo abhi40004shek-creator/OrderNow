@@ -1,0 +1,115 @@
+
+<section class="products-page container">
+  <header class="products-page-header">
+    <p class="products-eyebrow">THE ORDERNOW COLLECTION</p>
+    <h1>
+  <%= selectedCategory ? `${selectedCategory} Products` : "All Products" %>
+</h1>
+    <p>Discover products picked for your everyday needs.</p>
+  </header>
+            <nav class="product-category-nav" aria-label="Product categories">
+  <a
+    href="/products"
+    class="<%= !selectedCategory ? 'active' : '' %>"
+  >All Products</a>
+
+  <a
+    href="/products?category=Electronics"
+    class="<%= selectedCategory === 'Electronics' ? 'active' : '' %>"
+  >Electronics</a>
+
+  <a
+    href="/products?category=Fashion"
+    class="<%= selectedCategory === 'Fashion' ? 'active' : '' %>"
+  >Fashion</a>
+
+  <a
+    href="/products?category=Home%20%26%20Living"
+    class="<%= selectedCategory === 'Home & Living' ? 'active' : '' %>"
+  >Home &amp; Living</a>
+
+  <a
+    href="/products?category=Beauty"
+    class="<%= selectedCategory === 'Beauty' ? 'active' : '' %>"
+  >Beauty</a>
+</nav>
+  <div class="products-toolbar">
+    <h2>Explore our collection</h2>
+    <span><%= products.length %> products</span>
+  </div>
+
+  <% if (products.length > 0) { %>
+    <div class="products-grid">
+      <% products.forEach((product) => { %>
+        <article class="product-card">
+          <a
+            class="product-card-link"
+            href="/products/<%= encodeURIComponent(product.id) %>"
+          >
+            <div class="product-card-image" aria-hidden="true">
+              <span><%= product.image %></span>
+            </div>
+
+            <div class="product-card-content">
+              <p class="product-card-category">
+                <%= product.category %>
+              </p>
+
+              <h3><%= product.name %></h3>
+
+              <p class="product-card-rating">
+                ⭐ <%= product.rating %> / 5
+              </p>
+
+              <div class="product-card-prices">
+                <strong>
+                  ₹<%= product.price.toLocaleString("en-IN") %>
+                </strong>
+                <del>
+                  ₹<%= product.originalPrice.toLocaleString("en-IN") %>
+                </del>
+              </div>
+
+              <% if (product.originalPrice > 0) { %>
+                <span class="product-card-discount">
+                  <%= Math.round(
+                    ((product.originalPrice - product.price) /
+                      product.originalPrice) * 100
+                  ) %>% OFF
+                </span>
+              <% } %>
+            </div>
+          </a>
+
+          <div class="product-card-footer">
+            <% if (product.stock > 0) { %>
+              <span class="product-availability in-stock">
+                In Stock
+              </span>
+            <% } else { %>
+              <span class="product-availability out-of-stock">
+                Out of Stock
+              </span>
+            <% } %>
+
+            <a
+              class="product-view-button"
+              href="/products/<%= encodeURIComponent(product.id) %>"
+            >
+              View Details
+            </a>
+          </div>
+        </article>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <div class="products-empty-state">
+      <div aria-hidden="true">🛍️</div>
+      <h2>No products available</h2>
+      <p>Please check back later for new products.</p>
+      <a href="/products" class="products-home-button">
+           View All Products
+     </a>
+    </div>
+  <% } %>
+</section>

@@ -1,0 +1,153 @@
+
+/* ========================================
+   BENEFITS SECTION
+======================================== */
+
+.benefits-section {
+  padding: 36px 0;
+  background-color: var(--color-surface, #ffffff);
+  border-top: 1px solid var(--color-border, #e8e8ef);
+  border-bottom: 1px solid var(--color-border, #e8e8ef);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.benefit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #f0eeff;
+  font-size: 23px;
+}
+
+.benefit-content h3 {
+  margin: 2px 0 7px;
+  color: var(--color-text, #202033);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.benefit-content p {
+  margin: 0;
+  color: var(--color-text-muted, #77778a);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* ========================================
+   BENEFITS RESPONSIVE DESIGN
+======================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .benefits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .benefits-section {
+    padding: 30px 0;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .benefits-section {
+    padding: 26px 0;
+  }
+
+  .benefits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 14px;
+  }
+
+  .benefit-item {
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .benefit-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    font-size: 19px;
+  }
+
+  .benefit-content h3 {
+    margin-top: 1px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .benefit-content p {
+    font-size: 11px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Extra-small mobile */
+@media (max-width: 360px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .benefit-item {
+    gap: 12px;
+  }
+
+  .benefit-content h3 {
+    font-size: 14px;
+  }
+
+  .benefit-content p {
+    font-size: 12px;
+  }
+}
+
+/* Compact benefits cards on mobile */
+@media (max-width: 600px) {
+  .benefits-grid {
+    gap: 18px 12px;
+  }
+
+  .benefit-item {
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .benefit-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    border-radius: 9px;
+  }
+
+  .benefit-content h3 {
+    margin: 0 0 4px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .benefit-content p {
+    font-size: 10px;
+    line-height: 1.45;
+  }
+}

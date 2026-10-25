@@ -1,0 +1,177 @@
+
+/* =========================================
+   OrderNow — Product Categories
+========================================= */
+
+.categories-section {
+  padding: 76px 0;
+  background: var(--color-background);
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 34px;
+}
+
+.section-eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 1.5px;
+}
+
+.section-heading h2 {
+  margin-bottom: 10px;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -1px;
+}
+
+.section-heading p {
+  margin-bottom: 0;
+}
+
+.categories-view-all {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.categories-view-all:hover {
+  color: var(--color-primary-hover);
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  position: relative;
+  display: flex;
+  min-height: 190px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  border-color: rgb(91 75 219 / 35%);
+  box-shadow: var(--shadow-md);
+}
+
+.category-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  margin-bottom: 20px;
+  border-radius: var(--radius-md);
+  font-size: 1.8rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.category-electronics {
+  background: #eeebff;
+  color: #5b4bdb;
+}
+
+.category-fashion {
+  background: #fff0e8;
+  color: #e76b35;
+}
+
+.category-home {
+  background: #e6f6ef;
+  color: #16865c;
+}
+
+.category-beauty {
+  background: #ffeaf1;
+  color: #d84f83;
+}
+
+.category-sports {
+  background: #e8f2ff;
+  color: #2876d1;
+}
+
+.category-accessories {
+  background: #fff4d9;
+  color: #b17b12;
+}
+
+.category-card h3 {
+  margin-bottom: 5px;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.category-card p {
+  margin-bottom: 0;
+  font-size: var(--font-size-sm);
+}
+
+.category-arrow {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.category-card:hover .category-arrow {
+  transform: translate(2px, -2px);
+  color: var(--color-primary);
+}
+
+/* ========================================
+   CATEGORIES RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 1024px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .categories-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .categories-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+}

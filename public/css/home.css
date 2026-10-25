@@ -1,0 +1,593 @@
+
+/* =========================================
+   OrderNow — Homepage Hero
+========================================= */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  padding: 72px 0 84px;
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgb(91 75 219 / 9%),
+      transparent 30%
+    ),
+    linear-gradient(135deg, #ffffff 0%, #f7f8fc 100%);
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 64px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 8px 14px;
+  border: 1px solid #e3defe;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.hero-content h1 {
+  max-width: 620px;
+  margin-bottom: 22px;
+  font-size: clamp(2.5rem, 4.5vw, 4.25rem);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -2.5px;
+  line-height: 1.1;
+}
+
+.hero-content h1 span {
+  display: block;
+  color: var(--color-primary);
+}
+
+.hero-description {
+  max-width: 520px;
+  margin-bottom: 30px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.hero-button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  transition:
+    background var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+}
+
+.hero-button-primary {
+  background: var(--color-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.hero-button-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.hero-button-secondary {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.hero-button-secondary:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 42px;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.trust-item strong {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.trust-item span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.trust-divider {
+  width: 1px;
+  height: 34px;
+  background: var(--color-border);
+}
+
+/* Hero visual */
+
+.hero-visual {
+  position: relative;
+  display: grid;
+  min-height: 460px;
+  place-items: center;
+}
+
+.hero-shopping-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  padding: 26px;
+  border: 1px solid rgb(255 255 255 / 90%);
+  border-radius: 28px;
+  background: rgb(255 255 255 / 90%);
+  box-shadow: 0 30px 80px rgb(40 36 100 / 12%);
+  backdrop-filter: blur(12px);
+}
+
+.shopping-card-label {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 1.6px;
+}
+
+.shopping-illustration {
+  position: relative;
+  display: grid;
+  height: 265px;
+  overflow: hidden;
+  place-items: center;
+  margin-top: 18px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #f0edff, #fcece5);
+}
+
+.illustration-circle {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgb(91 75 219 / 12%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 30%);
+}
+
+.illustration-bag {
+  position: relative;
+  z-index: 1;
+  margin-top: 24px;
+}
+
+.bag-handle {
+  width: 65px;
+  height: 58px;
+  margin: 0 auto -8px;
+  border: 9px solid #8d7af2;
+  border-bottom: 0;
+  border-radius: 38px 38px 0 0;
+}
+
+.bag-front {
+  display: grid;
+  width: 130px;
+  height: 135px;
+  place-items: center;
+  border-radius: 14px 14px 25px 25px;
+  background: linear-gradient(145deg, #7965ec, #5541cb);
+  box-shadow: 0 18px 30px rgb(91 75 219 / 25%);
+  transform: perspective(500px) rotateY(-8deg) rotateZ(-3deg);
+}
+
+.bag-front span {
+  color: #ffffff;
+  font-size: 4rem;
+  font-weight: var(--font-weight-extrabold);
+}
+
+.illustration-spark {
+  position: absolute;
+  color: var(--color-accent);
+}
+
+.spark-one {
+  top: 38px;
+  right: 52px;
+  font-size: 2.2rem;
+}
+
+.spark-two {
+  bottom: 46px;
+  left: 44px;
+  font-size: 2.6rem;
+}
+
+.shopping-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 22px;
+}
+
+.shopping-card-footer strong {
+  font-size: var(--font-size-lg);
+}
+
+.shopping-card-footer p {
+  margin: 4px 0 0;
+  font-size: var(--font-size-sm);
+}
+
+.shopping-card-arrow {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 1.4rem;
+}
+
+.hero-decoration {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-decoration-one {
+  top: 18px;
+  right: 2%;
+  width: 100px;
+  height: 100px;
+  background: var(--color-accent-soft);
+}
+
+.hero-decoration-two {
+  bottom: 20px;
+  left: 2%;
+  width: 140px;
+  height: 140px;
+  background: var(--color-primary-soft);
+}
+
+.floating-note {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.floating-note-top {
+  top: 44px;
+  left: -12px;
+}
+
+.floating-note-bottom {
+  right: -8px;
+  bottom: 46px;
+}
+
+.floating-note-icon {
+  color: var(--color-accent);
+  font-size: 1.3rem;
+}
+
+.floating-note-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-success);
+}
+
+/* Follow-up section */
+
+.hero-followup {
+  padding: 26px 0;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  text-align: center;
+}
+
+.hero-followup p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+
+/* ========================================
+   OrderNow — Hero Mobile Improvements
+======================================== */
+
+@media (max-width: 768px) {
+  .hero-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    letter-spacing: -1.5px;
+    line-height: 1.12;
+    overflow-wrap: break-word;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .hero-visual {
+    min-height: 0;
+    padding: 24px 8px;
+    box-sizing: border-box;
+  }
+
+  .hero-shopping-card {
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .floating-note-top {
+    top: 4px;
+    left: 0;
+  }
+
+  .floating-note-bottom {
+    right: 0;
+    bottom: 4px;
+  }
+
+  .floating-note {
+    gap: 7px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .hero-trust {
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 30px;
+  }
+
+  .trust-item {
+    min-width: 0;
+  }
+
+  .trust-item strong {
+    font-size: 12px;
+  }
+
+  .trust-item span {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 36px 0;
+  }
+
+  .hero-container {
+    gap: 24px;
+  }
+
+  .hero-badge {
+    margin-bottom: 18px;
+    padding: 7px 11px;
+    font-size: 11px;
+  }
+
+  .hero-content h1 {
+    margin-bottom: 16px;
+    font-size: clamp(2rem, 9vw, 2.6rem);
+    letter-spacing: -1px;
+  }
+
+  .hero-description {
+    margin-bottom: 22px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    gap: 10px;
+  }
+
+  .hero-button {
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  .hero-trust {
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  .trust-item {
+    flex: 1 1 0;
+  }
+
+  .trust-divider {
+    height: 30px;
+  }
+
+  .hero-visual {
+    padding: 28px 0;
+  }
+
+  .hero-shopping-card {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .shopping-illustration {
+    height: 200px;
+    margin-top: 12px;
+    border-radius: 16px;
+  }
+
+  .illustration-circle {
+    width: 165px;
+    height: 165px;
+  }
+
+  .bag-handle {
+    width: 50px;
+    height: 44px;
+    border-width: 7px;
+  }
+
+  .bag-front {
+    width: 105px;
+    height: 110px;
+  }
+
+  .bag-front span {
+    font-size: 3rem;
+  }
+
+  .spark-one {
+    top: 25px;
+    right: 25px;
+    font-size: 1.7rem;
+  }
+
+  .spark-two {
+    bottom: 28px;
+    left: 24px;
+    font-size: 2rem;
+  }
+
+  .shopping-card-footer {
+    gap: 8px;
+    padding-top: 16px;
+  }
+
+  .shopping-card-footer strong {
+    font-size: 15px;
+  }
+
+  .shopping-card-footer p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .shopping-card-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .floating-note {
+    gap: 6px;
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  .floating-note-icon {
+    font-size: 1rem;
+  }
+
+  .floating-note-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .hero-decoration-one {
+    width: 65px;
+    height: 65px;
+  }
+
+  .hero-decoration-two {
+    width: 85px;
+    height: 85px;
+  }
+
+  .hero-followup {
+    padding: 20px 16px;
+  }
+
+  .hero-followup p {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-content h1 {
+    font-size: 1.9rem;
+  }
+
+  .hero-trust {
+    gap: 7px;
+  }
+
+  .trust-item strong {
+    font-size: 11px;
+  }
+
+  .trust-item span {
+    font-size: 10px;
+  }
+
+  .floating-note {
+    padding: 7px 8px;
+    font-size: 9px;
+  }
+
+  .hero-shopping-card {
+    padding: 12px;
+  }
+}
