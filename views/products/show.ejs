@@ -98,7 +98,6 @@
             value="1"
             step="1"
             required
-            oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value !== '' && Number(this.value) > <%= product.stock %>) this.value = '<%= product.stock %>'; if (this.value !== '' && Number(this.value) < 1) this.value = '1';"
           />
 
           <p>Maximum <%= product.stock %> item(s) available</p>
@@ -237,6 +236,39 @@
       } finally {
         wishlistButton.disabled = false;
       }
+    });
+  })();
+</script>
+
+<script>
+  (() => {
+    const quantityInput = document.getElementById("product-quantity");
+
+    if (!quantityInput) return;
+
+    quantityInput.addEventListener("input", () => {
+      const max = Number(quantityInput.max);
+      const value = quantityInput.value;
+
+      if (value === "") return;
+
+      const numericValue = Number(value);
+
+      if (numericValue > max) {
+        quantityInput.value = String(max);
+      }
+    });
+
+    quantityInput.addEventListener("change", () => {
+      const max = Number(quantityInput.max);
+      let value = Number(quantityInput.value);
+
+      if (!Number.isFinite(value) || value < 1) {
+        value = 1;
+      }
+
+      value = Math.min(Math.floor(value), max);
+      quantityInput.value = String(value);
     });
   })();
 </script>
