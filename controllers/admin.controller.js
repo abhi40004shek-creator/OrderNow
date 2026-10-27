@@ -3,25 +3,25 @@
 
 const orderModel = require("../models/order.model");
 
-function showAdminOrders(req, res, next) {
+async function showAdminOrders(req, res, next) {
   try {
-    const orders = orderModel.getAllOrders();
+    const orders = await orderModel.getAllOrders();
 
-  res.render("admin/orders/index", {
-  title: "Admin Order Management",
-  orders,});
+    return res.render("admin/orders/index", {
+      title: "Admin Order Management",
+      orders,
+    });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 }
 
-
-function updateAdminOrderStatus(req, res, next) {
+async function updateAdminOrderStatus(req, res, next) {
   try {
     const { orderId } = req.params;
     const { status } = req.body;
 
-    const result = orderModel.updateOrderStatus(orderId, status);
+    const result = await orderModel.updateOrderStatus(orderId, status);
 
     if (result.error) {
       if (result.error === "Order not found.") {
@@ -39,10 +39,9 @@ function updateAdminOrderStatus(req, res, next) {
 
     return res.redirect("/admin/orders");
   } catch (error) {
-    next(error);
+    return next(error);
   }
 }
-
 
 module.exports = {
   showAdminOrders,

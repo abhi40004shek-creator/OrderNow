@@ -4,7 +4,7 @@
 const orderModel = require("../models/order.model");
 const cartModel = require("../models/cart.model");
 
-function createOrder(req, res, next) {
+async function createOrder(req, res, next) {
   try {
     const {
       fullName,
@@ -85,7 +85,7 @@ function createOrder(req, res, next) {
     }
 
     const shipping = 0;
-    const order = orderModel.createOrder({
+    const order = await orderModel.createOrder({
       fullName: fullName.trim(),
       email: email.trim(),
       phone: phone.trim(),
@@ -113,11 +113,11 @@ function createOrder(req, res, next) {
   } catch (error) {
     return next(error);
   }
-}
+} 
 
-function showOrderConfirmation(req, res, next) {
+async function showOrderConfirmation(req, res, next) {
   try {
-    const order = orderModel.findOrderById(req.params.orderId);
+    const order = await orderModel.findOrderById(req.params.orderId);
 
     if (!order) {
       return res.status(404).render("error", {
@@ -136,9 +136,9 @@ function showOrderConfirmation(req, res, next) {
 }
 
 
-function showOrderHistory(req, res, next) {
+async function showOrderHistory(req, res, next) {
   try {
-    const orders = orderModel.getAllOrders();
+    const orders =await orderModel.getAllOrders();
 
     return res.render("orders/history", {
       title: "My Orders | OrderNow",
@@ -150,9 +150,9 @@ function showOrderHistory(req, res, next) {
 }
 
 
-function showOrderDetails(req, res, next) {
+async function showOrderDetails(req, res, next) {
   try {
-    const order = orderModel.findOrderById(req.params.orderId);
+    const order = await orderModel.findOrderById(req.params.orderId);
 
     if (!order) {
       return res.status(404).render("error", {
@@ -171,7 +171,7 @@ function showOrderDetails(req, res, next) {
 }
 
 
-function showOrderTracking(req, res, next) {
+ async function showOrderTracking(req, res, next) {
   try {
     const orderId =
       typeof req.query.orderId === "string"
@@ -185,7 +185,7 @@ function showOrderTracking(req, res, next) {
       });
     }
 
-    const order = orderModel.findOrderById(orderId);
+    const order =await orderModel.findOrderById(orderId);
 
     if (!order) {
       return res.status(404).render("orders/tracking", {
