@@ -8,9 +8,12 @@ const {
   getCartProduct,
 } = require("../controllers/cart.controller");
 
+const { requireAuth } = require("../middleware/auth.middleware");
+
 const router = express.Router();
 
-router.get("/", showCart);
-router.get("/product/:productId", getCartProduct);
+// Cart routes require authentication
+router.get("/", requireAuth, showCart);
+router.get("/product/:productId", requireAuth, getCartProduct);
 
 module.exports = router;

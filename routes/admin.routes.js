@@ -7,14 +7,20 @@ const {
   updateAdminOrderStatus,
 } = require("../controllers/admin.controller");
 
+const { requireAdmin } = require("../middleware/auth.middleware");
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", requireAdmin, (req, res) => {
   return res.redirect("/admin/orders");
 });
 
-router.get("/orders", showAdminOrders);
+router.get("/orders", requireAdmin, showAdminOrders);
 
-router.post("/orders/:orderId/status", updateAdminOrderStatus);
+router.post(
+  "/orders/:orderId/status",
+  requireAdmin,
+  updateAdminOrderStatus
+);
 
 module.exports = router;

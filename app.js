@@ -13,8 +13,12 @@ const wishlistRoutes = require("./routes/wishlist.routes");
 const cartRoutes = require("./routes/cart.routes");
 const checkoutRoutes = require("./routes/checkout.routes");
 const orderRoutes = require("./routes/order.routes");
+const authRoutes = require("./routes/auth.routes");
+const accountRoutes = require("./routes/account.routes");
 const adminRoutes = require("./routes/admin.routes");
 const productApiRoutes = require("./routes/api/product.routes");
+const authController = require("./controllers/auth.controller");
+
 
 const session = require("express-session");
 const { MongoStore } = require("connect-mongo");
@@ -25,6 +29,7 @@ const {
 } = require("./middleware/errorHandler");
 
 const app = express();
+
 
 // ================================
 // View Engine Configuration
@@ -42,6 +47,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+
 
 // ================================
 // Session Configuration
@@ -71,12 +77,19 @@ app.use(
   })
 );
 
+// Make the logged-in user available to all EJS views
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session?.user || null;
+  next();
+});
+
 // ================================
 // EJS Layout Configuration
 // ================================
 
 app.use(expressLayouts);
 app.set("layout", "layouts/main");
+
 
 // ================================
 // Application Routes
@@ -98,7 +111,13 @@ app.use("/checkout", checkoutRoutes);
 
 app.use("/api/orders", orderRoutes);
 
+app.use("/api/auth", authRoutes);
+
+app.use("/account", accountRoutes);
+
 app.use("/admin", adminRoutes);
+
+app.post("/logout", authController.logout);
 
 // ================================
 // Error Handling

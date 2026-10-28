@@ -23,15 +23,29 @@
       </button>
     </form>
 
-    <nav class="nav-actions" aria-label="Main navigation">
-      <a href="/account/login">Sign in</a>
-      <a href="/wishlist">Wishlist</a>
 
-      <a href="/api/orders/history">My Orders</a>
-      <a href="/api/orders/tracking">Track Order</a>
-      <a href="/cart" class="cart-link">
-        Cart <span class="cart-count">0</span>
-      </a>
-    </nav>
+<nav class="nav-actions" aria-label="Main navigation">
+  <% if (currentUser) { %>
+    <span class="nav-user-name">
+      Hi, <%= currentUser.name %>
+    </span>
+
+    <form action="/logout" method="POST" class="logout-form">
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+  <% } else { %>
+    <a href="/account/login">Sign in</a>
+    <a href="/account/signup">Sign up</a>
+  <% } %>
+
+  <a href="/wishlist">Wishlist</a>
+  <a href="/api/orders/history">My Orders</a>
+  <a href="/api/orders/tracking">Track Order</a>
+
+  <a href="/cart" class="cart-link">
+    Cart <span class="cart-count">0</span>
+  </a>
+</nav>
+
   </div>
 </header>
