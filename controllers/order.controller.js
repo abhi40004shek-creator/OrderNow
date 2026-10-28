@@ -3,8 +3,23 @@
 
 const orderModel = require("../models/order.model");
 const cartModel = require("../models/cart.model");
+const Product = require("../models/product.model");
+
 
 async function createOrder(req, res, next) {
+  const decrementedItems = [];
+
+  async function restoreStock() {
+    for (const item of [...decrementedItems].reverse()) {
+      await Product.updateOne(
+        { id: item.id },
+        { $inc: { stock: item.quantity } }
+      );
+    }
+
+    decrementedItems.length = 0;
+  }
+
   try {
     const {
       fullName,
@@ -39,12 +54,14 @@ async function createOrder(req, res, next) {
     }
 
     const validatedItems = [];
+    const seenProductIds = new Set();
     let subtotal = 0;
 
     for (const requestedItem of items) {
       if (
         !requestedItem ||
         typeof requestedItem.id !== "string" ||
+        !requestedItem.id.trim() ||
         !Number.isInteger(requestedItem.quantity) ||
         requestedItem.quantity < 1
       ) {
@@ -54,7 +71,19 @@ async function createOrder(req, res, next) {
         });
       }
 
-      const product = cartModel.getProductPrice(requestedItem.id);
+      const productId = requestedItem.id.trim();
+      const quantity = requestedItem.quantity;
+
+      if (seenProductIds.has(productId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Duplicate products are not allowed in an order.",
+        });
+      }
+
+      seenProductIds.add(productId);
+
+      const product = await cartModel.getProductPrice(productId);
 
       if (!product) {
         return res.status(400).json({
@@ -64,12 +93,39 @@ async function createOrder(req, res, next) {
       }
 
       if (
-        product.stock < 1 ||
-        requestedItem.quantity > product.stock
+        !Number.isInteger(product.stock) ||
+        product.stock < 0 ||
+        !Number.isFinite(product.price) ||
+        product.price < 0
       ) {
         return res.status(400).json({
           success: false,
+          message: "Product price or stock is invalid.",
+        });
+      }
+
+      if (quantity > product.stock) {
+        return res.status(400).json({
+          success: false,
           message: `${product.name} has insufficient stock.`,
+        });
+      }
+
+      const itemTotal = product.price * quantity;
+
+      if (!Number.isSafeInteger(itemTotal)) {
+        return res.status(400).json({
+          success: false,
+          message: "Order total is invalid.",
+        });
+      }
+
+      subtotal += itemTotal;
+
+      if (!Number.isSafeInteger(subtotal)) {
+        return res.status(400).json({
+          success: false,
+          message: "Order total is invalid.",
         });
       }
 
@@ -78,42 +134,91 @@ async function createOrder(req, res, next) {
         name: product.name,
         image: product.image,
         price: product.price,
-        quantity: requestedItem.quantity,
+        quantity,
       });
+    }
 
-      subtotal += product.price * requestedItem.quantity;
+    // Atomically reserve stock for each product.
+    for (const item of validatedItems) {
+      const updatedProduct = await Product.decreaseStock(
+        item.id,
+        item.quantity
+      );
+
+      if (!updatedProduct) {
+        await restoreStock();
+
+        return res.status(400).json({
+          success: false,
+          message: `${item.name} has insufficient stock. Please try again.`,
+        });
+      }
+
+      decrementedItems.push({
+        id: item.id,
+        quantity: item.quantity,
+      });
     }
 
     const shipping = 0;
-    const order = await orderModel.createOrder({
-      fullName: fullName.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      address: address.trim(),
-      city: city.trim(),
-      postalCode: postalCode.trim(),
-      items: validatedItems,
-      subtotal,
-      shipping,
-      total: subtotal + shipping,
-    });
 
-    return res.status(201).json({
-      success: true,
-      message: "Order created successfully.",
-      order: {
-        id: order.id,
-        status: order.status,
-        subtotal: order.subtotal,
-        shipping: order.shipping,
-        total: order.total,
-        createdAt: order.createdAt,
-      },
-    });
+    try {
+      const order = await orderModel.createOrder({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        address: address.trim(),
+        city: city.trim(),
+        postalCode: postalCode.trim(),
+        items: validatedItems,
+        subtotal,
+        shipping,
+        total: subtotal + shipping,
+      });
+
+      // Order saved successfully; keep the stock reduction.
+      decrementedItems.length = 0;
+
+      return res.status(201).json({
+        success: true,
+        message: "Order created successfully.",
+        order: {
+          id: order.id,
+          status: order.status,
+          subtotal: order.subtotal,
+          shipping: order.shipping,
+          total: order.total,
+          createdAt: order.createdAt,
+        },
+      });
+    } catch (error) {
+      try {
+        await restoreStock();
+      } catch (restoreError) {
+        console.error(
+          "CRITICAL: Failed to restore product stock after order creation failed.",
+          restoreError
+        );
+      }
+
+      throw error;
+    }
   } catch (error) {
+    if (decrementedItems.length > 0) {
+      try {
+        await restoreStock();
+      } catch (restoreError) {
+        console.error(
+          "CRITICAL: Failed to restore product stock.",
+          restoreError
+        );
+      }
+    }
+
     return next(error);
   }
-} 
+}
+
 
 async function showOrderConfirmation(req, res, next) {
   try {
@@ -135,10 +240,9 @@ async function showOrderConfirmation(req, res, next) {
   }
 }
 
-
 async function showOrderHistory(req, res, next) {
   try {
-    const orders =await orderModel.getAllOrders();
+    const orders = await orderModel.getAllOrders();
 
     return res.render("orders/history", {
       title: "My Orders | OrderNow",
@@ -148,7 +252,6 @@ async function showOrderHistory(req, res, next) {
     return next(error);
   }
 }
-
 
 async function showOrderDetails(req, res, next) {
   try {
@@ -170,8 +273,7 @@ async function showOrderDetails(req, res, next) {
   }
 }
 
-
- async function showOrderTracking(req, res, next) {
+async function showOrderTracking(req, res, next) {
   try {
     const orderId =
       typeof req.query.orderId === "string"
@@ -185,7 +287,7 @@ async function showOrderDetails(req, res, next) {
       });
     }
 
-    const order =await orderModel.findOrderById(orderId);
+    const order = await orderModel.findOrderById(orderId);
 
     if (!order) {
       return res.status(404).render("orders/tracking", {

@@ -3,9 +3,9 @@
 
 const cartModel = require("../models/cart.model");
 
-function showCart(req, res) {
+async function showCart(req, res) {
   try {
-    const title = "Shopping Cart | OrderNow";
+    const title = await cartModel.getCartTitle();
 
     return res.render("cart/index", {
       title,
@@ -18,9 +18,9 @@ function showCart(req, res) {
 }
 }
 
-function getCartProduct(req, res, next) {
+async function getCartProduct(req, res, next) {
   try {
-    const product = cartModel.getProductPrice(req.params.productId);
+    const product = await cartModel.getProductPrice(req.params.productId);
 
     if (!product) {
       return res.status(404).json({

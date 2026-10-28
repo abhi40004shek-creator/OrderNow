@@ -62,4 +62,34 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema);
+
+async function decreaseStock(productId, quantity) {
+  if (
+    typeof productId !== "string" ||
+    !productId.trim() ||
+    !Number.isInteger(quantity) ||
+    quantity < 1
+  ) {
+    return null;
+  }
+
+  return Product.findOneAndUpdate(
+    {
+      id: productId.trim(),
+      stock: { $gte: quantity },
+    },
+    {
+      $inc: { stock: -quantity },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  ).lean();
+}
+
+// Keep existing Product imports working.
+Product.decreaseStock = decreaseStock;
+
+module.exports = Product;

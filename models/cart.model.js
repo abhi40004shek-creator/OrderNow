@@ -1,14 +1,14 @@
 
 "use strict";
 
-const products = require("../data/products");
+const Product = require("./product.model");
 
-function findProductById(productId) {
-  return products.find((product) => product.id === productId) || null;
+async function findProductById(productId) {
+  return Product.findOne({ id: productId }).lean();
 }
 
-function getProductPrice(productId) {
-  const product = findProductById(productId);
+async function getProductPrice(productId) {
+  const product = await findProductById(productId);
 
   if (!product) {
     return null;
@@ -25,7 +25,12 @@ function getProductPrice(productId) {
   };
 }
 
+function getCartTitle() {
+  return "Your Shopping Cart";
+}
+
 module.exports = {
   findProductById,
   getProductPrice,
+  getCartTitle,
 };
